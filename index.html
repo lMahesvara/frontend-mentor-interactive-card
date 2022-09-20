@@ -184,7 +184,7 @@
         if (e.target.name === "month") {
           $span = e.target.parentElement.nextElementSibling
 
-          if (e.target.value.length !== 2) {
+          if (e.target.value.length !== 2 && e.target.value !== "") {
             e.target.classList.add("is-invalid")
             $span.textContent = "Expiration month must be 2 digits. "
           } else {
@@ -195,7 +195,7 @@
         if (e.target.name === "year") {
           $span = e.target.parentElement.nextElementSibling.nextElementSibling
 
-          if (e.target.value.length !== 2) {
+          if (e.target.value.length !== 2 && e.target.value !== "") {
             e.target.classList.add("is-invalid")
             $span.textContent = "Expiration year must be 2 digits. "
           } else {
@@ -206,7 +206,7 @@
         if (e.target.name === "cvc") {
           $span = e.target.nextElementSibling
 
-          if (e.target.value.length !== 3) {
+          if (e.target.value.length !== 3 && e.target.value !== "") {
             e.target.classList.add("is-invalid")
             $span.textContent = "CVC must be 3 digits"
           } else {
