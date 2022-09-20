@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Frontend Mentor | Interactive card details form</title>
+  </head>
+  <body>
+    <main>
+      <section class="cards-container">
+        <div class="front-card front-card-info">
+          <div class="front-card-logos">
+            <div class="white-full-circle"></div>
+            <div class="white-empty-circle"></div>
+          </div>
+          <div class="container-card-info">
+            <p class="card-number">0000 0000 0000 0000</p>
+            <div class="card-info">
+              <p id="cardholder-name">Erick Bernal</p>
+              <div class="card-expiration">
+                <p id="expiration-month">00</p>
+                <p>/</p>
+                <p id="expiration-year">00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="back-card back-card-info">
+          <p class="card-cvc" id="cvc">000</p>
+        </div>
+      </section>
+      <section class="form-container">
+        <form>
+          <label for="cardholderName">CARDHOLDER NAME</label>
+          <input
+            type="text"
+            name="cardholderName"
+            placeholder="e.g Erick Bernal"
+          />
+          <span class="error"></span>
+          <label for="card-number">CARD NUMBER</label>
+          <input
+            type="text"
+            name="cardNumber"
+            onkeypress="return formats(this,event)"
+            onkeyup="return numberValidation(event)"
+            placeholder="e.g. 1234 5678 9123 0000"
+          />
+          <span class="error"></span>
+
+          <div class="form-info">
+            <div class="form-info-left">
+              <label for="expiration-date">EXP. DATE</label>
+              <div class="form-info-left-inputs">
+                <input type="text" name="month" placeholder="MM" />
+
+                <input type="text" name="year" placeholder="YY" />
+              </div>
+              <span class="error"></span>
+              <span class="error"></span>
+            </div>
+            <div class="form-info-right">
+              <label for="cvc">CVC</label>
+              <input type="text" name="cvc" placeholder="e.g. 123" />
+              <span class="error"></span>
+            </div>
+          </div>
+          <button type="submit">Confirm</button>
+        </form>
+        <article class="complete none">
+          <img src="images/icon-complete.svg" alt="icon-complete" />
+          <h2>THANK YOU!</h2>
+          <p>We've added your card details</p>
+          <button id="btn-continue" type="button">Continue</button>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      const $cardNumber = document.querySelector(".card-number"),
+        $cardholderName = document.getElementById("cardholder-name"),
+        $expirationMonth = document.getElementById("expiration-month"),
+        $expirationYear = document.getElementById("expiration-year"),
+        $cvc = document.getElementById("cvc"),
+        $form = document.querySelector("form"),
+        $continue = document.getElementById("btn-continue")
+
+      $continue.addEventListener("click", () => {
+        $form.classList.remove("none")
+        $continue.parentElement.classList.add("none")
+        $form.reset()
+        $cardNumber.textContent = "0000 0000 0000 0000"
+        $cardholderName.textContent = "Erick Bernal"
+        $expirationMonth.textContent = "00"
+        $expirationYear.textContent = "00"
+        $cvc.textContent = "000"
+      })
+
+      $form.addEventListener("submit", e => {
+        e.preventDefault()
+        if ($form.cardholderName.value === "") {
+          $span = $form.cardholderName.nextElementSibling
+
+          $form.cardholderName.classList.add("is-invalid")
+          $span.textContent = "Cardholder name is required"
+        }
+        if ($form.cardNumber.value === "") {
+          $span = $form.cardNumber.nextElementSibling
+
+          $form.cardNumber.classList.add("is-invalid")
+          $span.textContent = "Card number is required"
+        }
+        if ($form.month.value === "") {
+          $span = $form.month.parentElement.nextElementSibling
+
+          $form.month.classList.add("is-invalid")
+          $span.textContent = "Expiration month is required"
+        }
+        if ($form.year.value === "") {
+          $span = $form.year.parentElement.nextElementSibling
+
+          $form.year.classList.add("is-invalid")
+          $span.textContent = "Expiration year is required"
+        }
+        if ($form.cvc.value === "") {
+          $span = $form.cvc.nextElementSibling
+
+          $form.cvc.classList.add("is-invalid")
+          $span.textContent = "CVC is required"
+        }
+
+        if (
+          $form.cardholderName.value !== "" &&
+          $form.cardNumber.value !== "" &&
+          $form.month.value !== "" &&
+          $form.year.value !== "" &&
+          $form.cvc.value !== ""
+        ) {
+          $form.classList.add("none")
+          $continue.parentElement.classList.remove("none")
+        }
+      })
+
+      document.addEventListener("focusout", e => {
+        if (e.target.name === "cardholderName") {
+          $span = e.target.nextElementSibling
+
+          if (e.target.value.length > 20) {
+            e.target.classList.add("is-invalid")
+            $span.textContent =
+              "Cardholder name must be less than 20 characters"
+          } else {
+            e.target.classList.remove("is-invalid")
+            $span.textContent = ""
+          }
+        }
+        if (e.target.name === "cardNumber") {
+          $span = e.target.nextElementSibling
+
+          if (e.target.value.length !== 19 && e.target.value !== "") {
+            e.target.classList.add("is-invalid")
+            $span.textContent = "Card number must be 16 digits"
+          } else {
+            e.target.classList.remove("is-invalid")
+            $span.textContent = ""
+          }
+        }
+        if (e.target.name === "month") {
+          $span = e.target.parentElement.nextElementSibling
+
+          if (e.target.value.length !== 2) {
+            e.target.classList.add("is-invalid")
+            $span.textContent = "Expiration month must be 2 digits. "
+          } else {
+            e.target.classList.remove("is-invalid")
+            $span.textContent = ""
+          }
+        }
+        if (e.target.name === "year") {
+          $span = e.target.parentElement.nextElementSibling.nextElementSibling
+
+          if (e.target.value.length !== 2) {
+            e.target.classList.add("is-invalid")
+            $span.textContent = "Expiration year must be 2 digits. "
+          } else {
+            e.target.classList.remove("is-invalid")
+            $span.textContent = ""
+          }
+        }
+        if (e.target.name === "cvc") {
+          $span = e.target.nextElementSibling
+
+          if (e.target.value.length !== 3) {
+            e.target.classList.add("is-invalid")
+            $span.textContent = "CVC must be 3 digits"
+          } else {
+            e.target.classList.remove("is-invalid")
+            $span.textContent = ""
+          }
+        }
+      })
+
+      document.addEventListener("keyup", e => {
+        if (e.target === $form.cardholderName) {
+          $cardholderName.textContent = e.target.value
+          e.target.value = e.target.value.replace(/[^a-zA-Z ]/g, "")
+
+          if (e.target.value === "") {
+            $cardholderName.textContent = "Erick Bernal"
+          }
+        }
+        if (e.target === $form.month) {
+          $expirationMonth.textContent = e.target.value.padEnd(2, "0")
+          e.target.value = e.target.value.replace(/\D/g, "")
+
+          if (e.target.value === "") {
+            $expirationMonth.textContent = "00"
+          }
+        }
+        if (e.target === $form.year) {
+          $expirationYear.textContent = e.target.value.padEnd(2, "0")
+          e.target.value = e.target.value.replace(/\D/g, "")
+
+          if (e.target.value === "") {
+            $expirationYear.textContent = "00"
+          }
+        }
+        if (e.target === $form.cvc) {
+          $cvc.textContent = e.target.value.padEnd(3, "0")
+          e.target.value = e.target.value.replace(/\D/g, "")
+
+          if (e.target.value === "") {
+            $cvc.textContent = "000"
+          }
+        }
+      })
+
+      document.addEventListener("keypress", e => {
+        if (e.target === $form.cardholderName) {
+          if (e.target.value.length > 20) {
+            e.preventDefault()
+          }
+        }
+        if (e.target === $form.month) {
+          if (e.target.value.length > 1) {
+            e.preventDefault()
+          }
+        }
+        if (e.target === $form.year) {
+          if (e.target.value.length > 1) {
+            e.preventDefault()
+          }
+        }
+        if (e.target === $form.cvc) {
+          if (e.target.value.length > 2) {
+            e.preventDefault()
+          }
+        }
+      })
+
+      function formats(el, e) {
+        if (el.value.length < 19) {
+          el.value = el.value.replace(/\W/gi, "").replace(/(.{4})/g, "$1 ")
+          return true
+        }
+        return false
+      }
+
+      function numberValidation(e) {
+        e.target.value = e.target.value.replace(/[^\d ]/g, "")
+        $cardNumber.textContent = e.target.value
+
+        if ($cardNumber.textContent.length < 19) {
+          $cardNumber.textContent = $cardNumber.textContent
+            .replace(/\W/gi, "")
+            .padEnd(16, "0")
+            .replace(/\W/gi, "")
+            .replace(/(.{4})/g, "$1 ")
+        }
+        if ($cardNumber.textContent.length === 0) {
+          $cardNumber.textContent = "0000 0000 0000 0000"
+        }
+        return false
+      }
+    </script>
+  </body>
+</html>
