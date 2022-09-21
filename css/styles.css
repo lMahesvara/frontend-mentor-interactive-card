@@ -37,8 +37,10 @@ main {
 
 .front-card {
   background-image: url(../images/bg-card-front.png);
-  width: 460px;
-  height: 260px;
+  width: 150%;
+  height: 30%;
+  max-width: 460px;
+  max-height: 260px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -99,8 +101,10 @@ main {
 
 .back-card {
   background-image: url(../images/bg-card-back.png);
-  width: 460px;
-  height: 260px;
+  width: 150%;
+  height: 30%;
+  max-width: 460px;
+  max-height: 260px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -236,4 +240,128 @@ button {
 .none {
   display: none;
   visibility: hidden;
+}
+
+/* Mobile screen */
+
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+  }
+  body {
+    min-width: 375px;
+  }
+
+  .cards-container {
+    width: 100%;
+    height: 35vh;
+    background-image: url(../images/bg-main-mobile.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .front-card {
+    background-image: url(../images/bg-card-front.png);
+    position: absolute;
+    z-index: 999;
+    width: 300px;
+    height: 160px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    margin-top: 180px;
+    margin-left: -70px;
+  }
+
+  .back-card {
+    background-image: url(../images/bg-card-back.png);
+    position: absolute;
+    width: 300px;
+    height: 160px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    margin-top: 0;
+    margin-left: 50px;
+  }
+
+  .front-card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  .white-full-circle {
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    border-radius: 50%;
+  }
+
+  .white-empty-circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid white;
+    margin-left: 10px;
+  }
+
+  .card-number {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  .card-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+  }
+
+  .form-container {
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  form {
+    width: 80%;
+    margin-left: 0;
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    letter-spacing: 0.1rem;
+    color: hsl(278, 68%, 11%);
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
+
+  .complete {
+    width: 80%;
+    margin-left: 0;
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    letter-spacing: 0.1rem;
+    font-size: 120%;
+  }
+  .none {
+    display: none;
+    visibility: hidden;
+  }
 }
